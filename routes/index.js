@@ -11,5 +11,5 @@ router.get(`/api/v1/`, (_req, res) => {
 
 router.use(auth)
 router.use(user)
-// other route
+// other routenod
 module.exports = router;
