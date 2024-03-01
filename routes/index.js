@@ -1,7 +1,10 @@
 const express = require('express')
 const auth = require('./authRoute')
 const user = require('./userRoutes')
+// const app = require('..')
 const router = express.Router()
+
+
 
 router.get(`/api/v1/`, (_req, res) => {
     res.json({
@@ -11,5 +14,5 @@ router.get(`/api/v1/`, (_req, res) => {
 
 router.use(auth)
 router.use(user)
-// other routenod
+
 module.exports = router;

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const model = require("../database/models");
+const model = require("../database/models")
 require("dotenv").config();
 
 module.exports = (req, res, next) => {
@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
         });
     } else {
         res.status(401).json({
-            message: "Silahkan Login Dahulu",
+            message: "silahkan login dahulu"
         });
     }
 };
