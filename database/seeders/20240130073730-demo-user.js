@@ -1,52 +1,27 @@
-'use strict';
-const bcrypt = require ("bcryptjs");
+const bcrypt = require('bcryptjs') 
 
-/** @type {import('sequelize-cli').Migration} */
+ /** @type {import('sequelize-cli').Migration} */
 module.exports = {  
   async up (queryInterface, Sequelize) {
-    let users= [];
-    let salt = bcrypt.genSaltSync(  10);
+    const users= [];
+    let salt = bcrypt.genSaltSync(10);
+    // users.push({
+    //   name: 'admin Project',  
+    //   role: 'admin',
+    //   email: 'adminn@gmail.com',
+    //   password: bcrypt.hashSync("rahasia", salt),
+    //   createdAt: new Date(),
+    //   updatedAt:  new Date()
+    // });
+    // users.push({
+    //   name: 'admin Project',  
+    //   role: 'member',
+    //   email: 'balung@gmail.com',
+    //   password: bcrypt.hashSync("balung123", salt),
+    //   createdAt: new Date(),
+    //   updatedAt:  new Date()
+    // });
     
-    users.push({
-      name: 'admin Project',
-      role: 'admin',
-      email: 'admin2@gmail.com',
-      password: bcrypt.hashSync("rahasia", salt),
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
-    users.push({
-      name: 'member',
-      role: 'member',
-      email: 'member3@gmail.com',
-      password: bcrypt.hashSync("rahasia", salt),
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
-    users.push({
-      name: 'member Project',
-      role: 'member',
-      email: 'member4@gmail.com',
-      password: bcrypt.hashSync("rahasia", salt),
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
-    users.push({
-      name: 'pasya Project',
-      role: 'member',
-      email: 'pasya@gmail.com',
-      password: bcrypt.hashSync("rahasia", salt),
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
-    users.push({
-      name: 'pasya Project',
-      role: 'member',
-      email: 'pasya2@gmail.com',
-      password: bcrypt.hashSync("rahasia", salt),
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
     return queryInterface.bulkInsert('Users', users, {});
   },
   async down (queryInterface, Sequelize) {

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Artikel.init({
+    
     image: DataTypes.STRING,
     title: DataTypes.STRING,
     content: DataTypes.TEXT

@@ -5,18 +5,11 @@ module.exports = {
     let events= [];
 
     events.push({
-      name: 'admin.png',
-      date: '',
-      location: 'awagjanwhaugybdahnfuhabyufna',
-      description: 'awagjanwhaugybdahnfuhabyufna',
-      createdAt: new Date(),
-      updatedAt:  new Date()
-    });
-    events.push({
-      name: 'admin.png',
-      date: '',
-      location: 'awagjanwhaugybdahnfuhabyufna',
-      description: 'awagjanwhaugybdahnfuhabyufna',
+      tittle: 'pasya gantenk',
+      date: '22072024',
+      image: 'p.png',
+      location: 'At Pasar Baru Bandung',
+      description: 'HADIRILAH!!!!!!',
       createdAt: new Date(),
       updatedAt:  new Date()
     });

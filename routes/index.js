@@ -1,18 +1,19 @@
+'use strict'
 const express = require('express')
-const auth = require('./authRoute')
-const user = require('./userRoutes')
-// const app = require('..')
-const router = express.Router()
+const router = express()
 
+// Import kategoriRoute dan produkRoute
+const artikelRoute = require('./artikelRoute');
+const authRoute = require('./authRoute');
 
 
 router.get(`/api/v1/`, (_req, res) => {
     res.json({
-        "message": "Hello World"
+        "message": "Welcome to restfullapi"
     })
 })
 
-router.use(auth)
-router.use(user)
+router.use(artikelRoute);
+router.use(authRoute);
 
-module.exports = router;
+module.exports = router

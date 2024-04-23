@@ -1,4 +1,4 @@
-const model = require("../database/models/");
+const model = require("../database/models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -7,82 +7,93 @@ function login(req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    model.user.findOne({
+    model.User.findOne({
         where: {
             email: email,
-        },
-    }).then(function (result) {
-        let passwordHash = result.password;
-        let checkPassword = bcrypt.compareSync(password, passwordHash);
+        }
+    }).then(function (data) {
+        if (!data) {
+            res.status(401).json({
+                message: "Login Gagal: User tidak ada",
+            });
+            return;
+        }
 
-        if (checkPassword) {
+        let passwordHash = data.password;
+        let isPasswordValid = bcrypt.compareSync(password, passwordHash);
+
+        if (isPasswordValid) {
             res.json({
                 message: "Berhasil Login",
-                token: jwt.sign({ id: result.id }, process.env.JWT_KEY_SECRET, {
+                data,
+                token: jwt.sign({ id: data.id, email: data.email }, process.env.JWT_KEY, {
                     expiresIn: '1h'
                 }),
             });
         } else {
-            res.json({
-                message: "Gagal Login",
+            res.status(401).json({
+                message: "Login Gagal: email atau password",
             });
         }
     }).catch(function (error) {
-        res.json({ error: error });
-    })
+        res.status(500).json({
+            message: "Login failed: An error occurred",
+            error: error,
+        });
+    });
 }
 
-function register(req, res) {
+function register(req, res){
     const name = req.body.name;
+    const image = req.body.image;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
     const role = req.body.role;
 
-    model.user.findOne({
+    model.User.findOne({
         where: {
             email: email,
         },
-    }).then(function (result) {
-        if(result) {
-            req.json({
-                message: "user already exists. Registration failed.",
+    }).then(function (result){
+        if(result){
+            res.json({
+                message: "Email Sudah Telah Di Terdaftar, Gunakan email lain ",
             });
         } else {
             const hashedPassword = bcrypt.hashSync(password, 10);
 
-            model.user.create({
+            model.User.create({
                 name: name,
+                image: image,
+                firstName: firstName,
+                lastName: lastName,
                 email: email,
                 password: hashedPassword,
                 role: role,
-            }).then(function (newUser) {
+            }).then(function (newUser){
                 res.json({
-                    message:"Registration successful",
-                    token: jwt.sign({ id: newUser.id }, process.env.JWT_KEY_SECRET, {
+                    message: "Registrasi Berhasil",
+                    name: newUser.name,
+                    image: newUser.image,
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
+                    email: newUser.email,
+                    token: jwt.sign({id: newUser.id}, process.env.JWT_KEY,{
                         expiresIn: '1h'
                     }),
-                    data: {
-                        id: newUser.id,
-                        name: newUser.name,
-                        email: newUser.email,
-                        role: newUser.role
-                    }
                 });
-            }).catch(function (error) {
-                res.json({ error: error });
+            }).catch(function (error){
+                res.json({error: error}); 
             });
         }
-    }).catch(function (error) {
-        res.json({ error: error })
-    })
-}
-
-function logout(req, res) {
-    res.json({
-        message:"Logout successful",
+    }).catch(function (error){
+        res.json({error: error});  
     });
 }
 
 module.exports = {
-    login, register, logout
+    login,
+    register
 }

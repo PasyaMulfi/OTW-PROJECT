@@ -1,16 +1,10 @@
 const db = require("../database/models");
-const User = db.user;
+const User = db.User;
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken')
 
 // CREATE: untuk enambahkan data kedalam tabel book
 exports.create = (req, res) => {
-  // validate request
-  if (!req.body.title) {
-    return res.status(400).send({
-      message: "Title can not be empty",
-    });
-  }
 
   // daya yang didapatkan dari inputan oleh pengguna
   const user = {
