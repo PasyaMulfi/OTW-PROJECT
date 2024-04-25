@@ -16,14 +16,12 @@ const store = async (req, res) => {
 
 // READ: Menampilkan atau mengambil semua data dari tabel artikel
 
-const fetchGaleri = async () => {
+const fetchGaleri = async (req, res) => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/galeri");
-      // Mengembalikan data yang diterima dari server jika permintaan berhasil
-      return response.data;
+      const data = await Galeri.findAll();
+      res.status(200).json({message: 'succes fetch data galeri', data});
     } catch (error) {
-      // Menangani kesalahan jika permintaan gagal
-      throw new Error(error.response.data.message);
+        res.json({ status: 422, message: 'Error', error: error.message });
     }
   };
 
@@ -77,7 +75,6 @@ const destroy = async (req, res) => {
 module.exports = { 
     fetchGaleri,
     store,  
-    index, 
     show, 
     update,
     destroy
